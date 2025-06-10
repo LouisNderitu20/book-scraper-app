@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Scraper</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Book Scraper</h1>
+
+    <!-- Scraping Form -->
+    <form id="scrape-form" method="POST" action="/scrape">
+      <label for="category">Select Category:</label>
+      <select name="category" id="category">
+        <option value="all">All Categories</option>
+        {% for category in categories %}
+          <option value="{{ category[1] }}">{{ category[0] }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Scrape</button>
+    </form>
+
+    <!-- Scraping Status -->
+    <div id="status">
+      {% if status %}
+        <p>{{ status }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Scraping Logs -->
+    {% if logs %}
+    <div class="logs">
+      <h3>Scraping Progress:</h3>
+      <ul>
+        {% for log in logs %}
+          <li>{{ log }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Search Form -->
+    {% if books %}
+    <form method="get" action="/" class="search-form">
+      <input type="text" name="search" placeholder="Search book titles..." value="{{ search_query }}">
+      <button type="submit">Search</button>
+    </form>
+    {% endif %}
+
+    <!-- Book Table -->
+    {% if books %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in books %}
+          <tr>
+            <td>{{ book['Title'] }}</td>
+            <td>{{ book['Price'] }}</td>
+            <td>{{ book['Rating'] }} ★</td>
+            <td>{{ book['Category'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <div class="pagination">
+  {% if current_page > 1 %}
+    <a href="/?search={{ search_query }}&page={{ current_page - 1 }}">« Prev</a>
+  {% endif %}
+
+  {% for p in range(1, total_pages + 1) %}
+    {% if p == current_page %}
+      <strong>{{ p }}</strong>
+    {% else %}
+      <a href="/?search={{ search_query }}&page={{ p }}">{{ p }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if current_page < total_pages %}
+    <a href="/?search={{ search_query }}&page={{ current_page + 1 }}">Next »</a>
+  {% endif %}
+</div>
+
+      </table>
+    </div>
+    <a href="/download" class="download-btn">⬇ Download CSV</a>
+    {% endif %}
+  </div>
+</body>
+</html>
