@@ -14,7 +14,7 @@ The **Book Scraper App** is a simple and elegant Flask-based web application tha
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - Python 3.x
 - Flask
