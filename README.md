@@ -1,16 +1,16 @@
-# 📚 Book Scraper App
+# Book Scraper App
 
 The **Book Scraper App** is a simple and elegant Flask-based web application that scrapes book data from [Books to Scrape](http://books.toscrape.com/) by category and displays the results in a clean, paginated table. You can search through scraped books and export them to a downloadable CSV file.
 
 ---
 
-## 🚀 Features
+##  Features
 
-- 🔎 Scrape books by category from books.toscrape.com
-- 📥 Download scraped data as a `.csv` file
-- 🔍 Search functionality
-- 📄 Pagination for easy navigation through large results
-- ✅ Clean, modern, and professional UI
+- Scrape books by category from books.toscrape.com
+- Download scraped data as a `.csv` file
+- Search functionality
+- Pagination for easy navigation through large results
+- Clean, modern, and professional UI
 
 ---
 
@@ -24,7 +24,7 @@ The **Book Scraper App** is a simple and elegant Flask-based web application tha
 
 ---
 
-## 🧰 Setup Instructions
+## Setup Instructions
 
 1. Clone the repository
    ```bash
@@ -49,7 +49,7 @@ python app.py
 5.Visit in browser
 http://localhost:5000
 
-📁 Project Structure
+Project Structure
 
 book-scraper-app/
 │
@@ -63,10 +63,10 @@ book-scraper-app/
 ├── requirements.txt       # List of required Python packages
 └── README.md              # Project documentation (this file)
 
-📝 License
+License
 This project is open source and available under the MIT License.
 
-🙋‍♂️ Author
+Author
 Louis Nderitu
 Frontend Developer | UI Designer
 
