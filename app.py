@@ -12,7 +12,8 @@ def index():
     page = int(request.args.get('page', 1))
     books = []
 
-    if os.path.exists('books.csv'):
+    # Only load books if the user entered a search query
+    if search_query and os.path.exists('books.csv'):
         with open('books.csv', 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -21,15 +22,15 @@ def index():
 
     # Pagination logic
     books_per_page = 10
-    total_pages = max(1, (len(books) + books_per_page - 1) // books_per_page)
+    total_pages = max(1, (len(books) + books_per_page - 1) // books_per_page) if books else 1
     start = (page - 1) * books_per_page
     end = start + books_per_page
-    paginated_books = books[start:end]
+    paginated_books = books[start:end] if books else []
 
     return render_template(
         'index.html',
         categories=categories,
-        books=paginated_books if books else None,
+        books=paginated_books if search_query else None,
         status="",
         logs=None,
         search_query=search_query,
