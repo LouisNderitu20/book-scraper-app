@@ -66,8 +66,8 @@ book-scraper-app/
 License
 This project is open source and available under the MIT License.
 
-Author
-Louis Nderitu
+Author:
+Louis Nderitu.
 Frontend Developer | UI Designer
 
 
