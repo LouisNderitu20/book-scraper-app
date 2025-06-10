@@ -13,13 +13,13 @@ def index():
     books = []
 
     if os.path.exists('books.csv'):
-        with open('books.csv', 'r', encoding='utf-8') as f:
+        with open('books.csv', 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 if search_query.lower() in row['Title'].lower():
                     books.append(row)
 
-    # Pagination
+    # Pagination logic
     books_per_page = 10
     total_pages = max(1, (len(books) + books_per_page - 1) // books_per_page)
     start = (page - 1) * books_per_page
@@ -42,8 +42,15 @@ def scrape():
     selected = request.form.get('category')
     categories = get_categories()
 
-    books, logs = scrape_books(selected)
+    # Find the readable category name
+    category_name = next((name for name, url in categories if url == selected), "All")
 
+    # Log using category name instead of URL
+    logs = [f"Started scraping category: {category_name}"]
+    books = scrape_books(selected)
+    logs.append(f"Finished scraping. Total books: {len(books)}")
+
+    # Save to CSV
     filename = 'books.csv'
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=['Title', 'Price', 'Rating', 'Category'])
@@ -51,7 +58,6 @@ def scrape():
         for book in books:
             writer.writerow(book)
 
-    # Provide pagination values to prevent Jinja2 errors
     return render_template(
         'index.html',
         categories=categories,
@@ -60,7 +66,7 @@ def scrape():
         logs=logs,
         search_query="",
         current_page=1,
-        total_pages=1  # No pagination yet during scraping, just prevent error
+        total_pages=1
     )
 
 @app.route('/download')
